@@ -1,7 +1,3 @@
-# ============================================
-# ARQUIVOS IGNORADOS PELO GIT
-# ============================================
-
 # Chaves de API e configurações sensíveis
 api-config.local.js
 config.local.js
@@ -33,8 +29,9 @@ Desktop.ini
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+logs/
 
-# Dependências (se usar npm futuramente)
+# Dependências
 node_modules/
 package-lock.json
 yarn.lock
@@ -55,3 +52,14 @@ out/
 *.zip
 *.tar.gz
 *.rar
+
+# Dados exportados
+exports/
+*.csv
+*.xls
+*.xlsx
+!sample-data.*
+
+# Cache do navegador
+.localstorage
+.sessionstorage
