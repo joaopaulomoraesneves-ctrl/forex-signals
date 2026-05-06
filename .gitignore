@@ -1,0 +1,57 @@
+# ============================================
+# ARQUIVOS IGNORADOS PELO GIT
+# ============================================
+
+# Chaves de API e configurações sensíveis
+api-config.local.js
+config.local.js
+*.env
+.env.*
+credentials.json
+
+# Sistema operacional
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+Desktop.ini
+
+# IDE e editores
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+*.sublime-project
+*.sublime-workspace
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Dependências (se usar npm futuramente)
+node_modules/
+package-lock.json
+yarn.lock
+
+# Arquivos temporários
+tmp/
+temp/
+*.tmp
+*.bak
+*.cache
+
+# Build outputs
+dist/
+build/
+out/
+
+# Arquivos de backup
+*.zip
+*.tar.gz
+*.rar
