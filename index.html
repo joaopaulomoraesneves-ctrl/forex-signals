@@ -5,266 +5,447 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
     <!-- SEO Meta Tags -->
-    <meta name="description" content="Sinais Forex em tempo real com análise técnica avançada. Integração com OANDA, Alpha Vantage e Twelve Data.">
-    <meta name="keywords" content="forex, trading, sinais forex, análise técnica, rsi, macd, bandas bollinger">
-    <meta name="author" content="Seu Nome">
-    <meta name="robots" content="index, follow">
+    <meta name="description" content="Sinais Forex Avançado - Análise Técnica Profissional com Machine Learning, Backtesting e Multi-Timeframe">
+    <meta name="keywords" content="forex, trading, sinais forex, análise técnica, machine learning, backtesting">
     
-    <!-- Open Graph para compartilhamento em redes sociais -->
-    <meta property="og:title" content="Sinais Forex - Entrada Inteligente">
-    <meta property="og:description" content="Análise técnica em tempo real para Forex">
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="https://seusite.com">
+    <title>Sinais Forex Pro - Análise Avançada</title>
     
-    <!-- Favicon -->
-    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📊</text></svg>">
-    
-    <title>Sinais Forex - Análise Técnica em Tempo Real</title>
-    
-    <!-- CSS Principal -->
+    <!-- CSS -->
     <link rel="stylesheet" href="styles.css">
-    
-    <!-- Font Awesome para ícones (CDN) -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
-    <!-- Cabeçalho Principal -->
+    <!-- Loading Screen -->
+    <div id="loadingScreen" class="loading-screen">
+        <div class="loading-content">
+            <i class="fas fa-chart-line fa-spin"></i>
+            <h2>Carregando Sinais Forex Pro</h2>
+            <div class="loading-bar">
+                <div class="loading-progress"></div>
+            </div>
+            <p id="loadingMessage">Inicializando módulos...</p>
+        </div>
+    </div>
+
+    <!-- Header -->
     <header class="main-header">
         <div class="header-content">
-            <h1>
-                <i class="fas fa-chart-line"></i>
-                Sinais Forex - Entrada Inteligente
-            </h1>
-            <p class="header-subtitle">
-                Análise técnica avançada com múltiplos indicadores e APIs reais de mercado
-            </p>
+            <div class="header-top">
+                <h1>
+                    <i class="fas fa-robot"></i>
+                    Sinais Forex Pro
+                    <span class="version-badge">v3.0</span>
+                </h1>
+                <div class="header-controls">
+                    <button class="icon-btn" onclick="toggleTheme()" title="Alternar tema">
+                        <i class="fas fa-moon"></i>
+                    </button>
+                    <button class="icon-btn" onclick="toggleFullscreen()" title="Tela cheia">
+                        <i class="fas fa-expand"></i>
+                    </button>
+                </div>
+            </div>
             
-            <!-- Status das APIs -->
+            <!-- Status Bar -->
+            <div class="status-bar">
+                <div class="status-item" id="marketStatus">
+                    <i class="fas fa-circle"></i> Mercado: Verificando...
+                </div>
+                <div class="status-item" id="processingStatus">
+                    <i class="fas fa-microchip"></i> Processamento: Idle
+                </div>
+                <div class="status-item" id="cacheStatus">
+                    <i class="fas fa-database"></i> Cache: 0 MB
+                </div>
+                <div class="status-item" id="workerStatus">
+                    <i class="fas fa-cogs"></i> Workers: 0 ativos
+                </div>
+            </div>
+            
+            <!-- API Status -->
             <div class="api-status-bar">
                 <div class="status-indicator" id="oandaStatus">
-                    <i class="fas fa-circle"></i> OANDA: Verificando...
+                    <i class="fas fa-circle"></i> OANDA
                 </div>
                 <div class="status-indicator" id="alphaVantageStatus">
-                    <i class="fas fa-circle"></i> Alpha Vantage: Verificando...
+                    <i class="fas fa-circle"></i> Alpha Vantage
                 </div>
                 <div class="status-indicator" id="twelveDataStatus">
-                    <i class="fas fa-circle"></i> Twelve Data: Verificando...
+                    <i class="fas fa-circle"></i> Twelve Data
                 </div>
             </div>
         </div>
     </header>
 
-    <!-- Conteúdo Principal -->
-    <main class="main-container">
+    <!-- Main Container -->
+    <div class="main-container">
         
-        <!-- Seção de Configuração das APIs -->
-        <section class="config-section" id="configSection">
-            <div class="section-header">
-                <h2>
-                    <i class="fas fa-key"></i>
-                    Configuração das APIs de Mercado
-                </h2>
-                <button class="toggle-btn" onclick="toggleConfig()">
-                    <i class="fas fa-chevron-up"></i>
-                </button>
-            </div>
+        <!-- Tab Navigation -->
+        <nav class="tab-nav">
+            <button class="tab-btn active" data-tab="dashboard">
+                <i class="fas fa-tachometer-alt"></i> Dashboard
+            </button>
+            <button class="tab-btn" data-tab="analysis">
+                <i class="fas fa-chart-bar"></i> Análise Avançada
+            </button>
+            <button class="tab-btn" data-tab="backtesting">
+                <i class="fas fa-history"></i> Backtesting
+            </button>
+            <button class="tab-btn" data-tab="charts">
+                <i class="fas fa-chart-line"></i> Gráficos
+            </button>
+            <button class="tab-btn" data-tab="risk">
+                <i class="fas fa-shield-alt"></i> Gestão de Risco
+            </button>
+            <button class="tab-btn" data-tab="settings">
+                <i class="fas fa-cog"></i> Configurações
+            </button>
+        </nav>
+
+        <!-- Tab Content -->
+        <div class="tab-content">
             
-            <div class="config-content" id="configContent">
-                <div class="info-box">
-                    <i class="fas fa-info-circle"></i>
-                    <p>Configure suas chaves de API para obter dados reais do mercado. 
-                    As chaves são armazenadas apenas no seu navegador.</p>
+            <!-- Dashboard Tab -->
+            <div class="tab-pane active" id="dashboard">
+                <!-- Config Section -->
+                <section class="config-section collapsible">
+                    <div class="section-header" onclick="toggleSection(this)">
+                        <h2><i class="fas fa-key"></i> Configuração das APIs</h2>
+                        <i class="fas fa-chevron-up"></i>
+                    </div>
+                    <div class="section-content">
+                        <div class="api-keys-grid">
+                            <div class="api-key-card">
+                                <div class="api-logo">OANDA</div>
+                                <input type="password" id="oandaKey" placeholder="API Key">
+                                <div class="api-limits">Limite: 10 req/s</div>
+                                <div class="api-usage" id="oandaUsage">Uso: 0%</div>
+                            </div>
+                            <div class="api-key-card">
+                                <div class="api-logo">Alpha Vantage</div>
+                                <input type="password" id="alphaVantageKey" placeholder="API Key">
+                                <div class="api-limits">Limite: 5 req/min</div>
+                                <div class="api-usage" id="alphaVantageUsage">Uso: 0%</div>
+                            </div>
+                            <div class="api-key-card">
+                                <div class="api-logo">Twelve Data</div>
+                                <input type="password" id="twelveDataKey" placeholder="API Key">
+                                <div class="api-limits">Limite: 8 req/min</div>
+                                <div class="api-usage" id="twelveDataUsage">Uso: 0%</div>
+                            </div>
+                        </div>
+                        <button class="btn btn-primary" onclick="saveApiConfig()">
+                            <i class="fas fa-save"></i> Salvar e Conectar
+                        </button>
+                    </div>
+                </section>
+
+                <!-- Pair Selector -->
+                <section class="pairs-section">
+                    <h2><i class="fas fa-exchange-alt"></i> Pares de Moedas</h2>
+                    <div class="pairs-grid" id="pairSelector">
+                        <!-- Gerado dinamicamente -->
+                    </div>
+                </section>
+
+                <!-- Main Dashboard -->
+                <div class="dashboard-grid">
+                    <!-- Signal Card -->
+                    <div class="card signal-card" id="signalCard">
+                        <div class="card-header">
+                            <h3><i class="fas fa-signal"></i> Sinal Principal</h3>
+                            <span class="timestamp" id="signalTimestamp"></span>
+                        </div>
+                        <div class="card-body" id="signalBody">
+                            <div class="loading">Aguardando dados...</div>
+                        </div>
+                    </div>
+
+                    <!-- Indicators Card -->
+                    <div class="card" id="indicatorsCard">
+                        <div class="card-header">
+                            <h3><i class="fas fa-chart-bar"></i> Indicadores</h3>
+                        </div>
+                        <div class="card-body" id="indicatorsBody">
+                            <div class="loading">Calculando...</div>
+                        </div>
+                    </div>
+
+                    <!-- Strength Card -->
+                    <div class="card" id="strengthCard">
+                        <div class="card-header">
+                            <h3><i class="fas fa-bolt"></i> Força do Sinal</h3>
+                        </div>
+                        <div class="card-body" id="strengthBody">
+                            <div class="loading">Analisando...</div>
+                        </div>
+                    </div>
+
+                    <!-- Correlation Card -->
+                    <div class="card" id="correlationCard">
+                        <div class="card-header">
+                            <h3><i class="fas fa-link"></i> Correlações</h3>
+                        </div>
+                        <div class="card-body" id="correlationBody">
+                            <div class="loading">Calculando correlações...</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Recent Signals -->
+                <section class="signals-section">
+                    <div class="section-header">
+                        <h2><i class="fas fa-list-ul"></i> Sinais Recentes</h2>
+                        <div class="header-actions">
+                            <button class="btn btn-sm" onclick="exportSignals()">
+                                <i class="fas fa-download"></i> Exportar
+                            </button>
+                            <button class="btn btn-sm" onclick="clearSignals()">
+                                <i class="fas fa-trash"></i> Limpar
+                            </button>
+                        </div>
+                    </div>
+                    <div class="signals-list" id="signalsList">
+                        <div class="loading">Nenhum sinal gerado ainda</div>
+                    </div>
+                </section>
+            </div>
+
+            <!-- Analysis Tab -->
+            <div class="tab-pane" id="analysis">
+                <div class="analysis-grid">
+                    <!-- Multi-Timeframe Analysis -->
+                    <div class="card">
+                        <div class="card-header">
+                            <h3><i class="fas fa-clock"></i> Análise Multi-Timeframe</h3>
+                            <select id="timeframeSelect" onchange="updateTimeframeAnalysis()">
+                                <option value="M5">5 Minutos</option>
+                                <option value="M15">15 Minutos</option>
+                                <option value="H1" selected>1 Hora</option>
+                                <option value="H4">4 Horas</option>
+                                <option value="D1">Diário</option>
+                                <option value="W1">Semanal</option>
+                            </select>
+                        </div>
+                        <div class="card-body" id="timeframeAnalysis">
+                            <canvas id="timeframeChart"></canvas>
+                        </div>
+                    </div>
+
+                    <!-- Pattern Recognition -->
+                    <div class="card">
+                        <div class="card-header">
+                            <h3><i class="fas fa-search"></i> Reconhecimento de Padrões</h3>
+                        </div>
+                        <div class="card-body" id="patternRecognition">
+                            <div class="pattern-list">
+                                <!-- Padrões detectados -->
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- ML Predictions -->
+                    <div class="card">
+                        <div class="card-header">
+                            <h3><i class="fas fa-brain"></i> Previsões ML</h3>
+                            <button class="btn btn-sm" onclick="trainModel()">
+                                <i class="fas fa-play"></i> Treinar Modelo
+                            </button>
+                        </div>
+                        <div class="card-body" id="mlPredictions">
+                            <div class="prediction-chart">
+                                <canvas id="predictionChart"></canvas>
+                            </div>
+                            <div class="prediction-stats" id="predictionStats"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Backtesting Tab -->
+            <div class="tab-pane" id="backtesting">
+                <div class="backtesting-controls">
+                    <div class="control-group">
+                        <label>Par:</label>
+                        <select id="backtestPair">
+                            <option value="EUR_USD">EUR/USD</option>
+                            <option value="GBP_USD">GBP/USD</option>
+                            <option value="USD_JPY">USD/JPY</option>
+                        </select>
+                    </div>
+                    <div class="control-group">
+                        <label>Período:</label>
+                        <select id="backtestPeriod">
+                            <option value="1M">1 Mês</option>
+                            <option value="3M">3 Meses</option>
+                            <option value="6M">6 Meses</option>
+                            <option value="1Y">1 Ano</option>
+                        </select>
+                    </div>
+                    <div class="control-group">
+                        <label>Estratégia:</label>
+                        <select id="backtestStrategy">
+                            <option value="rsi_macd">RSI + MACD</option>
+                            <option value="ma_crossover">MA Crossover</option>
+                            <option value="bollinger">Bollinger Bands</option>
+                            <option value="combined">Combinada</option>
+                        </select>
+                    </div>
+                    <button class="btn btn-primary" onclick="runBacktest()">
+                        <i class="fas fa-play"></i> Executar Backtest
+                    </button>
                 </div>
                 
-                <div class="api-keys-grid">
-                    <!-- OANDA -->
-                    <div class="api-key-card">
-                        <div class="api-logo">
-                            <i class="fas fa-building"></i> OANDA
-                        </div>
-                        <input 
-                            type="password" 
-                            id="oandaKey" 
-                            placeholder="Sua chave API OANDA"
-                            aria-label="Chave API OANDA"
-                        >
-                        <a href="https://developer.oanda.com/" target="_blank" class="api-link">
-                            Obter chave gratuita →
-                        </a>
+                <div class="backtesting-results">
+                    <div class="results-summary" id="backtestSummary">
+                        <!-- Resultados do backtest -->
                     </div>
-                    
-                    <!-- Alpha Vantage -->
-                    <div class="api-key-card">
-                        <div class="api-logo">
-                            <i class="fas fa-chart-bar"></i> Alpha Vantage
-                        </div>
-                        <input 
-                            type="password" 
-                            id="alphaVantageKey" 
-                            placeholder="Sua chave Alpha Vantage"
-                            aria-label="Chave Alpha Vantage"
-                        >
-                        <a href="https://www.alphavantage.co/support/#api-key" target="_blank" class="api-link">
-                            Obter chave gratuita →
-                        </a>
+                    <div class="results-chart">
+                        <canvas id="backtestChart"></canvas>
                     </div>
-                    
-                    <!-- Twelve Data -->
-                    <div class="api-key-card">
-                        <div class="api-logo">
-                            <i class="fas fa-database"></i> Twelve Data
-                        </div>
-                        <input 
-                            type="password" 
-                            id="twelveDataKey" 
-                            placeholder="Sua chave Twelve Data"
-                            aria-label="Chave Twelve Data"
-                        >
-                        <a href="https://twelvedata.com/apikey" target="_blank" class="api-link">
-                            Obter chave gratuita →
-                        </a>
+                    <div class="results-trades" id="backtestTrades">
+                        <!-- Lista de trades -->
                     </div>
                 </div>
-                
-                <div class="config-actions">
-                    <button class="btn btn-save" onclick="saveApiKeys()">
+            </div>
+
+            <!-- Charts Tab -->
+            <div class="tab-pane" id="charts">
+                <div class="charts-controls">
+                    <button class="btn btn-sm" onclick="addIndicator('rsi')">+ RSI</button>
+                    <button class="btn btn-sm" onclick="addIndicator('macd')">+ MACD</button>
+                    <button class="btn btn-sm" onclick="addIndicator('bollinger')">+ Bollinger</button>
+                    <button class="btn btn-sm" onclick="clearChart()">Limpar</button>
+                    <button class="btn btn-sm" onclick="screenshot()">
+                        <i class="fas fa-camera"></i> Screenshot
+                    </button>
+                </div>
+                <div class="chart-container">
+                    <canvas id="mainChart"></canvas>
+                </div>
+                <div class="indicator-charts">
+                    <canvas id="indicatorChart1"></canvas>
+                    <canvas id="indicatorChart2"></canvas>
+                </div>
+            </div>
+
+            <!-- Risk Management Tab -->
+            <div class="tab-pane" id="risk">
+                <div class="risk-calculator">
+                    <h3><i class="fas fa-calculator"></i> Calculadora de Posição</h3>
+                    <div class="calculator-grid">
+                        <div class="input-group">
+                            <label>Capital da Conta ($)</label>
+                            <input type="number" id="accountCapital" value="10000" min="100">
+                        </div>
+                        <div class="input-group">
+                            <label>Risco por Trade (%)</label>
+                            <input type="number" id="riskPercentage" value="1" min="0.1" max="10" step="0.1">
+                        </div>
+                        <div class="input-group">
+                            <label>Stop Loss (pips)</label>
+                            <input type="number" id="stopLoss" value="50" min="5">
+                        </div>
+                        <div class="input-group">
+                            <label>Take Profit (pips)</label>
+                            <input type="number" id="takeProfit" value="100" min="10">
+                        </div>
+                    </div>
+                    <button class="btn btn-primary" onclick="calculatePosition()">
+                        <i class="fas fa-calculator"></i> Calcular
+                    </button>
+                    <div class="calculation-result" id="positionResult"></div>
+                </div>
+
+                <div class="risk-metrics">
+                    <h3><i class="fas fa-chart-pie"></i> Métricas de Risco</h3>
+                    <div class="metrics-grid" id="riskMetrics">
+                        <!-- Métricas calculadas -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- Settings Tab -->
+            <div class="tab-pane" id="settings">
+                <div class="settings-grid">
+                    <div class="setting-group">
+                        <h3><i class="fas fa-bell"></i> Notificações</h3>
+                        <label class="switch">
+                            <input type="checkbox" id="enableNotifications" checked>
+                            <span class="slider"></span>
+                            Ativar notificações
+                        </label>
+                        <label class="switch">
+                            <input type="checkbox" id="enableSound">
+                            <span class="slider"></span>
+                            Alertas sonoros
+                        </label>
+                    </div>
+                    
+                    <div class="setting-group">
+                        <h3><i class="fas fa-sliders-h"></i> Parâmetros de Análise</h3>
+                        <div class="input-group">
+                            <label>Período RSI</label>
+                            <input type="number" id="rsiPeriod" value="14" min="2" max="50">
+                        </div>
+                        <div class="input-group">
+                            <label>Período MACD</label>
+                            <input type="number" id="macdFast" value="12" min="2" max="50">
+                        </div>
+                        <div class="input-group">
+                            <label>Threshold de Força (%)</label>
+                            <input type="number" id="strengthThreshold" value="60" min="30" max="100">
+                        </div>
+                    </div>
+                    
+                    <div class="setting-group">
+                        <h3><i class="fas fa-palette"></i> Aparência</h3>
+                        <label class="switch">
+                            <input type="checkbox" id="darkMode">
+                            <span class="slider"></span>
+                            Modo escuro
+                        </label>
+                        <div class="input-group">
+                            <label>Tamanho da fonte</label>
+                            <input type="range" id="fontSize" min="12" max="20" value="14">
+                        </div>
+                    </div>
+                    
+                    <button class="btn btn-primary" onclick="saveSettings()">
                         <i class="fas fa-save"></i> Salvar Configurações
                     </button>
-                    <button class="btn btn-clear" onclick="clearApiKeys()">
-                        <i class="fas fa-trash"></i> Limpar Chaves
-                    </button>
                 </div>
             </div>
-        </section>
-
-        <!-- Seletor de Pares de Moedas -->
-        <section class="pairs-section">
-            <h2><i class="fas fa-exchange-alt"></i> Selecione o Par de Moedas</h2>
-            <div class="pairs-grid" id="pairSelector">
-                <button class="pair-btn active" data-pair="EUR_USD">
-                    <span class="pair-name">EUR/USD</span>
-                    <span class="pair-nickname">Euro / Dólar</span>
-                </button>
-                <button class="pair-btn" data-pair="GBP_USD">
-                    <span class="pair-name">GBP/USD</span>
-                    <span class="pair-nickname">Libra / Dólar</span>
-                </button>
-                <button class="pair-btn" data-pair="USD_JPY">
-                    <span class="pair-name">USD/JPY</span>
-                    <span class="pair-nickname">Dólar / Iene</span>
-                </button>
-                <button class="pair-btn" data-pair="AUD_USD">
-                    <span class="pair-name">AUD/USD</span>
-                    <span class="pair-nickname">Australiano / Dólar</span>
-                </button>
-                <button class="pair-btn" data-pair="USD_CAD">
-                    <span class="pair-name">USD/CAD</span>
-                    <span class="pair-nickname">Dólar / Canadense</span>
-                </button>
-                <button class="pair-btn" data-pair="EUR_GBP">
-                    <span class="pair-name">EUR/GBP</span>
-                    <span class="pair-nickname">Euro / Libra</span>
-                </button>
-            </div>
-        </section>
-
-        <!-- Área de Mensagens -->
-        <div class="message-area" id="messageArea" style="display: none;"></div>
-
-        <!-- Dashboard Principal -->
-        <section class="dashboard-section">
-            <div class="dashboard-header">
-                <h2><i class="fas fa-tachometer-alt"></i> Dashboard de Análise</h2>
-                <div class="data-source-badge" id="dataSourceBadge">
-                    <i class="fas fa-sync"></i> Dados Simulados
-                </div>
-            </div>
-            
-            <div class="dashboard-grid" id="dashboard">
-                <div class="loading-state">
-                    <i class="fas fa-spinner fa-spin"></i>
-                    <p>Carregando dados do mercado...</p>
-                </div>
-            </div>
-        </section>
-
-        <!-- Sinais de Entrada -->
-        <section class="signals-section">
-            <div class="signals-header">
-                <h2><i class="fas fa-signal"></i> Sinais de Entrada Detectados</h2>
-                <div class="signals-count" id="signalsCount">0 sinais</div>
-            </div>
-            
-            <div class="signals-list" id="signalsList">
-                <div class="loading-state">
-                    <i class="fas fa-spinner fa-spin"></i>
-                    <p>Aguardando análise...</p>
-                </div>
-            </div>
-            
-            <div class="actions-bar">
-                <button class="btn btn-primary" onclick="fetchRealTimeData()">
-                    <i class="fas fa-satellite"></i> Buscar Dados Reais
-                </button>
-                <button class="btn btn-secondary" onclick="useSimulatedData()">
-                    <i class="fas fa-random"></i> Usar Dados Simulados
-                </button>
-                <button class="btn btn-refresh" onclick="refreshData()">
-                    <i class="fas fa-redo"></i> Atualizar
-                </button>
-            </div>
-        </section>
-
-        <!-- Seção Educacional -->
-        <section class="education-section">
-            <h2><i class="fas fa-graduation-cap"></i> Como Interpretar os Sinais</h2>
-            <div class="education-grid">
-                <div class="edu-card">
-                    <div class="edu-icon buy">
-                        <i class="fas fa-arrow-up"></i>
-                    </div>
-                    <h3>Sinal de COMPRA</h3>
-                    <p>Múltiplos indicadores apontam para tendência de alta. 
-                    Momento favorável para posições longas.</p>
-                </div>
-                
-                <div class="edu-card">
-                    <div class="edu-icon sell">
-                        <i class="fas fa-arrow-down"></i>
-                    </div>
-                    <h3>Sinal de VENDA</h3>
-                    <p>Indicadores técnicos sugerem reversão ou continuação de baixa. 
-                    Considere posições curtas.</p>
-                </div>
-                
-                <div class="edu-card">
-                    <div class="edu-icon neutral">
-                        <i class="fas fa-minus"></i>
-                    </div>
-                    <h3>Sinal NEUTRO</h3>
-                    <p>Indicadores divergentes ou sem tendência clara. 
-                    Aguarde definição do mercado.</p>
-                </div>
-            </div>
-            
-            <div class="disclaimer">
-                <i class="fas fa-exclamation-triangle"></i>
-                <p><strong>Aviso Importante:</strong> Este aplicativo é para fins educacionais. 
-                Trading envolve riscos significativos. Nunca opere com dinheiro que você não pode perder.</p>
-            </div>
-        </section>
+        </div>
     </main>
 
-    <!-- Rodapé -->
+    <!-- Notification Container -->
+    <div id="notificationContainer" class="notification-container"></div>
+
+    <!-- Footer -->
     <footer class="main-footer">
         <div class="footer-content">
-            <p>© 2024 Sinais Forex - Todos os direitos reservados</p>
-            <p>Desenvolvido para fins educacionais de análise técnica</p>
+            <div class="footer-stats">
+                <span>Processamento: <span id="processTime">0ms</span></span>
+                <span>Memória: <span id="memoryUsage">0MB</span></span>
+                <span>Uptime: <span id="uptime">00:00:00</span></span>
+            </div>
+            <p>© 2024 Sinais Forex Pro - Versão 3.0</p>
         </div>
     </footer>
 
     <!-- Scripts -->
-    <script src="api-config.js"></script>
-    <script src="app.js"></script>
+    <script src="js/logger.js"></script>
+    <script src="js/cache-manager.js"></script>
+    <script src="js/api-manager.js"></script>
+    <script src="js/indicators.js"></script>
+    <script src="js/analysis-engine.js"></script>
+    <script src="js/chart-renderer.js"></script>
+    <script src="js/backtesting.js"></script>
+    <script src="js/risk-manager.js"></script>
+    <script src="js/ml-predictor.js"></script>
+    <script src="js/notification.js"></script>
+    <script src="js/data-exporter.js"></script>
+    <script src="js/app.js"></script>
 </body>
 </html>
