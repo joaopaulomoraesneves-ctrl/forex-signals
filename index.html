@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="Sinais Forex em tempo real com análise técnica avançada. Integração com OANDA, Alpha Vantage e Twelve Data.">
+    <meta name="keywords" content="forex, trading, sinais forex, análise técnica, rsi, macd, bandas bollinger">
+    <meta name="author" content="Seu Nome">
+    <meta name="robots" content="index, follow">
+    
+    <!-- Open Graph para compartilhamento em redes sociais -->
+    <meta property="og:title" content="Sinais Forex - Entrada Inteligente">
+    <meta property="og:description" content="Análise técnica em tempo real para Forex">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://seusite.com">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📊</text></svg>">
+    
+    <title>Sinais Forex - Análise Técnica em Tempo Real</title>
+    
+    <!-- CSS Principal -->
+    <link rel="stylesheet" href="styles.css">
+    
+    <!-- Font Awesome para ícones (CDN) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Cabeçalho Principal -->
+    <header class="main-header">
+        <div class="header-content">
+            <h1>
+                <i class="fas fa-chart-line"></i>
+                Sinais Forex - Entrada Inteligente
+            </h1>
+            <p class="header-subtitle">
+                Análise técnica avançada com múltiplos indicadores e APIs reais de mercado
+            </p>
+            
+            <!-- Status das APIs -->
+            <div class="api-status-bar">
+                <div class="status-indicator" id="oandaStatus">
+                    <i class="fas fa-circle"></i> OANDA: Verificando...
+                </div>
+                <div class="status-indicator" id="alphaVantageStatus">
+                    <i class="fas fa-circle"></i> Alpha Vantage: Verificando...
+                </div>
+                <div class="status-indicator" id="twelveDataStatus">
+                    <i class="fas fa-circle"></i> Twelve Data: Verificando...
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Conteúdo Principal -->
+    <main class="main-container">
+        
+        <!-- Seção de Configuração das APIs -->
+        <section class="config-section" id="configSection">
+            <div class="section-header">
+                <h2>
+                    <i class="fas fa-key"></i>
+                    Configuração das APIs de Mercado
+                </h2>
+                <button class="toggle-btn" onclick="toggleConfig()">
+                    <i class="fas fa-chevron-up"></i>
+                </button>
+            </div>
+            
+            <div class="config-content" id="configContent">
+                <div class="info-box">
+                    <i class="fas fa-info-circle"></i>
+                    <p>Configure suas chaves de API para obter dados reais do mercado. 
+                    As chaves são armazenadas apenas no seu navegador.</p>
+                </div>
+                
+                <div class="api-keys-grid">
+                    <!-- OANDA -->
+                    <div class="api-key-card">
+                        <div class="api-logo">
+                            <i class="fas fa-building"></i> OANDA
+                        </div>
+                        <input 
+                            type="password" 
+                            id="oandaKey" 
+                            placeholder="Sua chave API OANDA"
+                            aria-label="Chave API OANDA"
+                        >
+                        <a href="https://developer.oanda.com/" target="_blank" class="api-link">
+                            Obter chave gratuita →
+                        </a>
+                    </div>
+                    
+                    <!-- Alpha Vantage -->
+                    <div class="api-key-card">
+                        <div class="api-logo">
+                            <i class="fas fa-chart-bar"></i> Alpha Vantage
+                        </div>
+                        <input 
+                            type="password" 
+                            id="alphaVantageKey" 
+                            placeholder="Sua chave Alpha Vantage"
+                            aria-label="Chave Alpha Vantage"
+                        >
+                        <a href="https://www.alphavantage.co/support/#api-key" target="_blank" class="api-link">
+                            Obter chave gratuita →
+                        </a>
+                    </div>
+                    
+                    <!-- Twelve Data -->
+                    <div class="api-key-card">
+                        <div class="api-logo">
+                            <i class="fas fa-database"></i> Twelve Data
+                        </div>
+                        <input 
+                            type="password" 
+                            id="twelveDataKey" 
+                            placeholder="Sua chave Twelve Data"
+                            aria-label="Chave Twelve Data"
+                        >
+                        <a href="https://twelvedata.com/apikey" target="_blank" class="api-link">
+                            Obter chave gratuita →
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="config-actions">
+                    <button class="btn btn-save" onclick="saveApiKeys()">
+                        <i class="fas fa-save"></i> Salvar Configurações
+                    </button>
+                    <button class="btn btn-clear" onclick="clearApiKeys()">
+                        <i class="fas fa-trash"></i> Limpar Chaves
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Seletor de Pares de Moedas -->
+        <section class="pairs-section">
+            <h2><i class="fas fa-exchange-alt"></i> Selecione o Par de Moedas</h2>
+            <div class="pairs-grid" id="pairSelector">
+                <button class="pair-btn active" data-pair="EUR_USD">
+                    <span class="pair-name">EUR/USD</span>
+                    <span class="pair-nickname">Euro / Dólar</span>
+                </button>
+                <button class="pair-btn" data-pair="GBP_USD">
+                    <span class="pair-name">GBP/USD</span>
+                    <span class="pair-nickname">Libra / Dólar</span>
+                </button>
+                <button class="pair-btn" data-pair="USD_JPY">
+                    <span class="pair-name">USD/JPY</span>
+                    <span class="pair-nickname">Dólar / Iene</span>
+                </button>
+                <button class="pair-btn" data-pair="AUD_USD">
+                    <span class="pair-name">AUD/USD</span>
+                    <span class="pair-nickname">Australiano / Dólar</span>
+                </button>
+                <button class="pair-btn" data-pair="USD_CAD">
+                    <span class="pair-name">USD/CAD</span>
+                    <span class="pair-nickname">Dólar / Canadense</span>
+                </button>
+                <button class="pair-btn" data-pair="EUR_GBP">
+                    <span class="pair-name">EUR/GBP</span>
+                    <span class="pair-nickname">Euro / Libra</span>
+                </button>
+            </div>
+        </section>
+
+        <!-- Área de Mensagens -->
+        <div class="message-area" id="messageArea" style="display: none;"></div>
+
+        <!-- Dashboard Principal -->
+        <section class="dashboard-section">
+            <div class="dashboard-header">
+                <h2><i class="fas fa-tachometer-alt"></i> Dashboard de Análise</h2>
+                <div class="data-source-badge" id="dataSourceBadge">
+                    <i class="fas fa-sync"></i> Dados Simulados
+                </div>
+            </div>
+            
+            <div class="dashboard-grid" id="dashboard">
+                <div class="loading-state">
+                    <i class="fas fa-spinner fa-spin"></i>
+                    <p>Carregando dados do mercado...</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Sinais de Entrada -->
+        <section class="signals-section">
+            <div class="signals-header">
+                <h2><i class="fas fa-signal"></i> Sinais de Entrada Detectados</h2>
+                <div class="signals-count" id="signalsCount">0 sinais</div>
+            </div>
+            
+            <div class="signals-list" id="signalsList">
+                <div class="loading-state">
+                    <i class="fas fa-spinner fa-spin"></i>
+                    <p>Aguardando análise...</p>
+                </div>
+            </div>
+            
+            <div class="actions-bar">
+                <button class="btn btn-primary" onclick="fetchRealTimeData()">
+                    <i class="fas fa-satellite"></i> Buscar Dados Reais
+                </button>
+                <button class="btn btn-secondary" onclick="useSimulatedData()">
+                    <i class="fas fa-random"></i> Usar Dados Simulados
+                </button>
+                <button class="btn btn-refresh" onclick="refreshData()">
+                    <i class="fas fa-redo"></i> Atualizar
+                </button>
+            </div>
+        </section>
+
+        <!-- Seção Educacional -->
+        <section class="education-section">
+            <h2><i class="fas fa-graduation-cap"></i> Como Interpretar os Sinais</h2>
+            <div class="education-grid">
+                <div class="edu-card">
+                    <div class="edu-icon buy">
+                        <i class="fas fa-arrow-up"></i>
+                    </div>
+                    <h3>Sinal de COMPRA</h3>
+                    <p>Múltiplos indicadores apontam para tendência de alta. 
+                    Momento favorável para posições longas.</p>
+                </div>
+                
+                <div class="edu-card">
+                    <div class="edu-icon sell">
+                        <i class="fas fa-arrow-down"></i>
+                    </div>
+                    <h3>Sinal de VENDA</h3>
+                    <p>Indicadores técnicos sugerem reversão ou continuação de baixa. 
+                    Considere posições curtas.</p>
+                </div>
+                
+                <div class="edu-card">
+                    <div class="edu-icon neutral">
+                        <i class="fas fa-minus"></i>
+                    </div>
+                    <h3>Sinal NEUTRO</h3>
+                    <p>Indicadores divergentes ou sem tendência clara. 
+                    Aguarde definição do mercado.</p>
+                </div>
+            </div>
+            
+            <div class="disclaimer">
+                <i class="fas fa-exclamation-triangle"></i>
+                <p><strong>Aviso Importante:</strong> Este aplicativo é para fins educacionais. 
+                Trading envolve riscos significativos. Nunca opere com dinheiro que você não pode perder.</p>
+            </div>
+        </section>
+    </main>
+
+    <!-- Rodapé -->
+    <footer class="main-footer">
+        <div class="footer-content">
+            <p>© 2024 Sinais Forex - Todos os direitos reservados</p>
+            <p>Desenvolvido para fins educacionais de análise técnica</p>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="api-config.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
